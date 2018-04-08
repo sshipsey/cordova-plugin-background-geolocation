@@ -80,7 +80,7 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
     protected void pluginInitialize() {
         super.pluginInitialize();
 
-        facade = new BackgroundGeolocationFacade(this);
+        facade = new BackgroundGeolocationFacade(this.getContext(), this);
         facade.init();
 
         logger = LoggerManager.getLogger(BackgroundGeolocationPlugin.class);
@@ -336,7 +336,6 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
         super.onDestroy();
     }
 
-    @Override
     public Activity getActivity() {
         return cordova.getActivity();
     }

@@ -36,7 +36,7 @@
         <framework src="android/common/logtofile.gradle" custom="true" type="gradleReference"/>
         <framework src="com.google.android.gms:play-services-location:$GOOGLE_PLAY_SERVICES_VERSION" />
         <framework src="com.android.support:support-v4:$ANDROID_SUPPORT_LIBRARY_VERSION" />
-        <!-- Generated with gen_sources.sh @ 2018-04-06 11:19:33 -->
+        <!-- Generated with gen_sources.sh @ 2018-04-20 16:44:17 -->
         <source-file src="android/CDVBackgroundGeolocation/src/main/java/com/marianhello/bgloc/cordova/ConfigMapper.java" target-dir="src/com/marianhello/bgloc/cordova" />
         <source-file src="android/CDVBackgroundGeolocation/src/main/java/com/tenforwardconsulting/bgloc/cordova/BackgroundGeolocationPlugin.java" target-dir="src/com/tenforwardconsulting/bgloc/cordova" />
         <source-file src="android/common/src/main/java/com/evgenii/jsevaluator/HandlerWrapper.java" target-dir="src/com/evgenii/jsevaluator" />
@@ -63,11 +63,15 @@
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/LocationDAO.java" target-dir="src/com/marianhello/bgloc/data" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/LocationTemplateFactory.java" target-dir="src/com/marianhello/bgloc/data" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/LocationTemplate.java" target-dir="src/com/marianhello/bgloc/data" />
+        <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/PostQueue.java" target-dir="src/com/marianhello/bgloc/data" />
+        <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/PostQueueManager.java" target-dir="src/com/marianhello/bgloc/data" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/sqlite/SQLiteConfigurationContract.java" target-dir="src/com/marianhello/bgloc/data/sqlite" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/sqlite/SQLiteConfigurationDAO.java" target-dir="src/com/marianhello/bgloc/data/sqlite" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/sqlite/SQLiteLocationContract.java" target-dir="src/com/marianhello/bgloc/data/sqlite" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/sqlite/SQLiteLocationDAO.java" target-dir="src/com/marianhello/bgloc/data/sqlite" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/sqlite/SQLiteOpenHelper.java" target-dir="src/com/marianhello/bgloc/data/sqlite" />
+        <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/SyncQueue.java" target-dir="src/com/marianhello/bgloc/data" />
+        <source-file src="android/common/src/main/java/com/marianhello/bgloc/data/SyncQueueManager.java" target-dir="src/com/marianhello/bgloc/data" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/headless/ActivityTask.java" target-dir="src/com/marianhello/bgloc/headless" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/headless/HeadlessTaskRunner.java" target-dir="src/com/marianhello/bgloc/headless" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/headless/LocationTask.java" target-dir="src/com/marianhello/bgloc/headless" />
@@ -75,7 +79,6 @@
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/headless/Task.java" target-dir="src/com/marianhello/bgloc/headless" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/HttpPostService.java" target-dir="src/com/marianhello/bgloc" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/LocationService.java" target-dir="src/com/marianhello/bgloc" />
-        <source-file src="android/common/src/main/java/com/marianhello/bgloc/NotificationHelper.java" target-dir="src/com/marianhello/bgloc" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/PluginDelegate.java" target-dir="src/com/marianhello/bgloc" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/PluginError.java" target-dir="src/com/marianhello/bgloc" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/provider/AbstractLocationProvider.java" target-dir="src/com/marianhello/bgloc/provider" />
@@ -90,21 +93,27 @@
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/sync/AuthenticatorService.java" target-dir="src/com/marianhello/bgloc/sync" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/sync/BatchManager.java" target-dir="src/com/marianhello/bgloc/sync" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/sync/DummyContentProvider.java" target-dir="src/com/marianhello/bgloc/sync" />
-        <source-file src="android/common/src/main/java/com/marianhello/bgloc/sync/SyncAdapter.java" target-dir="src/com/marianhello/bgloc/sync" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/sync/SyncService.java" target-dir="src/com/marianhello/bgloc/sync" />
         <source-file src="android/common/src/main/java/com/marianhello/bgloc/UploadingCallback.java" target-dir="src/com/marianhello/bgloc" />
         <source-file src="android/common/src/main/java/com/marianhello/logging/DBLogReader.java" target-dir="src/com/marianhello/logging" />
-        <source-file src="android/common/src/main/java/com/marianhello/logging/FileLogReader.java" target-dir="src/com/marianhello/logging" />
         <source-file src="android/common/src/main/java/com/marianhello/logging/LogEntry.java" target-dir="src/com/marianhello/logging" />
         <source-file src="android/common/src/main/java/com/marianhello/logging/LoggerManager.java" target-dir="src/com/marianhello/logging" />
-        <source-file src="android/common/src/main/java/com/marianhello/logging/LogReader.java" target-dir="src/com/marianhello/logging" />
-        <source-file src="android/common/src/main/java/com/marianhello/logging/SQLBuilder.java" target-dir="src/com/marianhello/logging" />
-        <source-file src="android/common/src/main/java/com/marianhello/logging/SQLiteAppender.java" target-dir="src/com/marianhello/logging" />
+        <source-file src="android/common/src/main/java/com/marianhello/logging/UncaughtExceptionLogger.java" target-dir="src/com/marianhello/logging" />
+        <source-file src="android/common/src/main/java/com/marianhello/utils/concurrent/ManagedQueue.java" target-dir="src/com/marianhello/utils/concurrent" />
+        <source-file src="android/common/src/main/java/com/marianhello/utils/concurrent/QueueIterator.java" target-dir="src/com/marianhello/utils/concurrent" />
+        <source-file src="android/common/src/main/java/com/marianhello/utils/concurrent/QueueManager.java" target-dir="src/com/marianhello/utils/concurrent" />
         <source-file src="android/common/src/main/java/com/marianhello/utils/Convert.java" target-dir="src/com/marianhello/utils" />
+        <source-file src="android/common/src/main/java/com/marianhello/utils/TextUtils.java" target-dir="src/com/marianhello/utils" />
         <source-file src="android/common/src/main/java/com/marianhello/utils/Tone.java" target-dir="src/com/marianhello/utils" />
         <source-file src="android/common/src/main/java/com/tenforwardconsulting/bgloc/DistanceFilterLocationProvider.java" target-dir="src/com/tenforwardconsulting/bgloc" />
         <source-file src="android/common/src/main/java/org/apache/commons/io/Charsets.java" target-dir="src/org/apache/commons/io" />
         <source-file src="android/common/src/main/java/org/apache/commons/io/input/ReversedLinesFileReader.java" target-dir="src/org/apache/commons/io/input" />
+        <source-file src="android/common/src/main/java/ru/andremoniy/sqlbuilder/SqlExpression.java" target-dir="src/ru/andremoniy/sqlbuilder" />
+        <source-file src="android/common/src/main/java/ru/andremoniy/sqlbuilder/SqlSelectStatement.java" target-dir="src/ru/andremoniy/sqlbuilder" />
+        <source-file src="android/common/src/main/java/ru/andremoniy/sqlbuilder/SqlStatement.java" target-dir="src/ru/andremoniy/sqlbuilder" />
+        <source-file src="android/common/src/main/java/ru/andremoniy/utils/TextUtils.java" target-dir="src/ru/andremoniy/utils" />
+        <source-file src="android/common/src/oreo/java/com/marianhello/bgloc/NotificationHelper.java" target-dir="src/com/marianhello/bgloc" />
+        <source-file src="android/common/src/oreo/java/com/marianhello/bgloc/sync/SyncAdapter.java" target-dir="src/com/marianhello/bgloc/sync" />
         <!-- End of generated sources -->
 
         <resource-file src="android/common/src/main/res/xml/syncadapter.xml" target="res/xml/syncadapter.xml" />
