@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 platform=$1
+flavor=${2:-oreo}
 src_root=""
 target_regexp=""
 sources_regexp=""
@@ -9,11 +10,11 @@ script_dir=$( cd "$(dirname "$0")" ; pwd -P )
 
 if [[ "$platform" == android ]]; then
   src_root="android"
-  target_regexp="s|android/.*/src/main/java|src|"
-  sources_regexp=".*/src/main/java/.*\.java"
+  target_regexp="s|android/.*/src/(main\|$flavor)/java|src|"
+  sources_regexp=".*\/src\/\(main\|$flavor\)\/java\/.*\.java"
 elif [[ "$platform" ==  ios ]]; then
   src_root="ios"
-  sources_regexp=".*BackgroundGeolocation/.*\.[h,m]"
+  sources_regexp=".*BackgroundGeolocation\/.*\.[h,m]"
 else
   echo "Missing or wrong parameter. Must be either: ios or android"
   exit 1;
@@ -31,7 +32,7 @@ src_files=$(find $src_dir -regex $sources_regexp | sed "s|$src_dir|$src_root|" |
 echo "<!-- Generated with gen_sources.sh @ $(date '+%Y-%m-%d %H:%M:%S') -->"
 for f in $src_files; do
   if [[ ! -z "$target_regexp" ]]; then
-    target_name=$(echo $f | sed $target_regexp)
+    target_name=$(echo $f | sed -r $target_regexp)
     target_attr="target-dir=\"$(dirname $target_name)\" "
   fi
   if [[ "$f" == *h ]]; then
