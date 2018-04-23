@@ -15,7 +15,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.provider.Settings.SettingNotFoundException;
 
 import com.marianhello.bgloc.BackgroundGeolocationFacade;
 import com.marianhello.bgloc.Config;
@@ -77,6 +76,56 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
 
     private org.slf4j.Logger logger;
 
+    public static class ErrorPluginResult {
+        public static PluginResult from(String message, int code) {
+            JSONObject json = new JSONObject();
+            try {
+                json.put("code", code);
+                json.put("message", message);
+            } catch (JSONException e) {
+                // not interested
+            }
+            return new PluginResult(PluginResult.Status.ERROR, json);
+        }
+
+        public static PluginResult from(String message, Throwable cause, int code) {
+            JSONObject json = new JSONObject();
+            try {
+                json.put("code", code);
+                json.put("message", message);
+                json.put("cause", from(cause));
+            } catch (JSONException e) {
+                // not interested
+            }
+            return new PluginResult(PluginResult.Status.ERROR, json);
+        }
+
+        public static PluginResult from(PluginException e) {
+            JSONObject json = new JSONObject();
+            try {
+                json.put("code", e.getMessage());
+                json.put("message", e.getMessage());
+                if (e.getCause() != null) {
+                    json.put("cause", from(e.getCause()));
+                }
+            } catch (JSONException ex) {
+                // not interested
+            }
+
+            return new PluginResult(PluginResult.Status.ERROR, json);
+        }
+
+        private static JSONObject from(Throwable e) {
+            JSONObject error = new JSONObject();
+            try {
+                error.put("message", e.getMessage());
+            } catch (JSONException e1) {
+                // not interested
+            }
+            return error;
+        }
+    }
+
     @Override
     protected void pluginInitialize() {
         super.pluginInitialize();
@@ -129,9 +178,12 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
                         Config config = ConfigMapper.fromJSONObject(data.getJSONObject(0));
                         facade.configure(config);
                         callbackContext.success();
-                    } catch (Exception e) {
+                    } catch (JSONException e) {
                         logger.error("Configuration error: {}", e.getMessage());
-                        callbackContext.error("Configuration error: " + e.getMessage());
+                        callbackContext.sendPluginResult(ErrorPluginResult.from("Configuration error", e, PluginException.CONFIGURE_ERROR));
+                    } catch (PluginException e) {
+                        logger.error("Configuration error: {}", e.getMessage());
+                        callbackContext.sendPluginResult(ErrorPluginResult.from(e));
                     }
                 }
             });
@@ -141,9 +193,9 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
             logger.debug("Location services enabled check");
             try {
                 callbackContext.success(facade.locationServicesEnabled() ? 1 : 0);
-            } catch (SettingNotFoundException e) {
+            } catch (PluginException e) {
                 logger.error("Location service checked failed: {}", e.getMessage());
-                callbackContext.error("Location setting error occured");
+                callbackContext.sendPluginResult(ErrorPluginResult.from(e));
             }
 
             return true;
@@ -165,7 +217,7 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
                 }
             } catch (JSONException e) {
                 logger.error("Getting stationary location failed: {}", e.getMessage());
-                callbackContext.error("Getting stationary location failed");
+                callbackContext.sendPluginResult(ErrorPluginResult.from("Getting stationary location failed", e, PluginException.JSON_ERROR));
             }
 
             return true;
@@ -176,7 +228,7 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
                         callbackContext.success(getAllLocations());
                     } catch (JSONException e) {
                         logger.error("Getting all locations failed: {}", e.getMessage());
-                        callbackContext.error("Converting locations to JSON failed.");
+                        callbackContext.sendPluginResult(ErrorPluginResult.from("Converting locations to JSON failed", e, PluginException.JSON_ERROR));
                     }
                 }
             });
@@ -189,7 +241,7 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
                         callbackContext.success(getValidLocations());
                     } catch (JSONException e) {
                         logger.error("Getting valid locations failed: {}", e.getMessage());
-                        callbackContext.error("Converting locations to JSON failed.");
+                        callbackContext.sendPluginResult(ErrorPluginResult.from("Converting locations to JSON failed", e, PluginException.JSON_ERROR));
                     }
                 }
             });
@@ -204,7 +256,7 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
                         callbackContext.success();
                     } catch (JSONException e) {
                         logger.error("Delete location failed: {}", e.getMessage());
-                        callbackContext.error("Deleting location failed: " + e.getMessage());
+                        callbackContext.sendPluginResult(ErrorPluginResult.from("Delete location failed", e, PluginException.JSON_ERROR));
                     }
                 }
             });
@@ -226,8 +278,10 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
                         Config config = facade.getConfig();
                         callbackContext.success(ConfigMapper.toJSONObject(config));
                     } catch (JSONException e) {
-                        logger.error("Error getting mConfig: {}", e.getMessage());
-                        callbackContext.error("Error getting mConfig: " + e.getMessage());
+                        callbackContext.sendPluginResult(ErrorPluginResult.from("Error getting config", e, PluginException.JSON_ERROR));
+                    } catch (PluginException e) {
+                        logger.error("Error getting config: {}", e.getMessage());
+                        callbackContext.sendPluginResult(ErrorPluginResult.from(e));
                     }
                 }
             });
@@ -239,7 +293,7 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
                     try {
                         callbackContext.success(getLogs(data.getInt(0)));
                     } catch (Exception e) {
-                        callbackContext.error("Getting logs failed: " + e.getMessage());
+                        callbackContext.sendPluginResult(ErrorPluginResult.from("Getting logs failed", e, PluginException.SERVICE_ERROR));
                     }
                 }
             });
@@ -251,7 +305,7 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
                     try {
                         callbackContext.success(checkStatus());
                     } catch (Exception e) {
-                        callbackContext.error("Getting logs failed: " + e.getMessage());
+                        callbackContext.sendPluginResult(ErrorPluginResult.from("Checking status failed", e, PluginException.SERVICE_ERROR));
                     }
                 }
             });
@@ -268,7 +322,7 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
             try {
                 facade.registerHeadlessTask(data.getString(0));
             } catch (JSONException e) {
-                callbackContext.error("Registering headless task failed: " + e.getMessage());
+                callbackContext.sendPluginResult(ErrorPluginResult.from("Registering headless task failed", e, PluginException.JSON_ERROR));
             }
             return true;
         } else if (ACTION_FORCE_SYNC.equals(action)) {
@@ -399,13 +453,9 @@ public class BackgroundGeolocationPlugin extends CordovaPlugin implements Plugin
         if (callbackContext == null) {
             return;
         }
-        try {
-            PluginResult result = new PluginResult(PluginResult.Status.ERROR, e.toJSONObject());
-            result.setKeepCallback(true);
-            callbackContext.sendPluginResult(result);
-        } catch(JSONException je) {
-            logger.error("Error sending error {}: {}", je.getMessage());
-        }
+        PluginResult result = ErrorPluginResult.from(e);
+        result.setKeepCallback(true);
+        callbackContext.sendPluginResult(result);
     }
 
     private void runOnUiThread(Runnable runnable) {
