@@ -4,7 +4,6 @@ import com.marianhello.bgloc.Config;
 import com.marianhello.bgloc.cordova.ConfigMapper;
 import com.marianhello.bgloc.data.ArrayListLocationTemplate;
 import com.marianhello.bgloc.data.HashMapLocationTemplate;
-import com.marianhello.bgloc.data.LinkedHashSetLocationTemplate;
 import com.marianhello.bgloc.data.LocationTemplate;
 import com.marianhello.bgloc.data.LocationTemplateFactory;
 
@@ -16,7 +15,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 
 /**
  * Created by finch on 15.12.2017.
@@ -114,7 +112,7 @@ public class ConfigMapperTest {
     @Test
     public void testNullHashMapTemplateToJSONObject() {
         Config config = new Config();
-        LocationTemplate tpl = new HashMapLocationTemplate(null);
+        LocationTemplate tpl = new HashMapLocationTemplate((HashMapLocationTemplate)null);
         config.setTemplate(tpl);
 
         try {
@@ -158,56 +156,9 @@ public class ConfigMapperTest {
     }
 
     @Test
-    public void testNullLinkedHashSetTemplateToJSONObject() {
-        Config config = new Config();
-        LocationTemplate tpl = new LinkedHashSetLocationTemplate(null);
-        config.setTemplate(tpl);
-
-        try {
-            JSONObject jConfig = ConfigMapper.toJSONObject(config);
-            Assert.assertEquals(JSONObject.NULL, jConfig.get("postTemplate"));
-        } catch (JSONException e) {
-            Assert.fail(e.getMessage());
-        }
-    }
-
-    @Test
-    public void testEmptyLinkedHashSetTemplateToJSONObject() {
-        Config config = new Config();
-        LinkedHashSet set = new LinkedHashSet();
-        LocationTemplate tpl = new LinkedHashSetLocationTemplate(set);
-        config.setTemplate(tpl);
-
-        try {
-            JSONObject jConfig = ConfigMapper.toJSONObject(config);
-            Assert.assertEquals("[]", jConfig.get("postTemplate").toString());
-        } catch (JSONException e) {
-            Assert.fail(e.getMessage());
-        }
-    }
-
-    @Test
-    public void testLinkedHashSetTemplateToJSONObject() {
-        Config config = new Config();
-        LinkedHashSet set = new LinkedHashSet();
-        set.add("foo");
-        set.add(123);
-        set.add("foo");
-        LocationTemplate tpl = new LinkedHashSetLocationTemplate(set);
-        config.setTemplate(tpl);
-
-        try {
-            JSONObject jConfig = ConfigMapper.toJSONObject(config);
-            Assert.assertEquals("[\"foo\",123]", jConfig.get("postTemplate").toString());
-        } catch (JSONException e) {
-            Assert.fail(e.getMessage());
-        }
-    }
-
-    @Test
     public void testNullArrayListLocationTemplateToJSONObject() {
         Config config = new Config();
-        LocationTemplate tpl = new ArrayListLocationTemplate(null);
+        LocationTemplate tpl = new ArrayListLocationTemplate((ArrayListLocationTemplate)null);
         config.setTemplate(tpl);
 
         try {

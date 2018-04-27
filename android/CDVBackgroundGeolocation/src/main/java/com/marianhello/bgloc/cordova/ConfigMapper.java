@@ -3,7 +3,6 @@ package com.marianhello.bgloc.cordova;
 import com.marianhello.bgloc.Config;
 import com.marianhello.bgloc.data.ArrayListLocationTemplate;
 import com.marianhello.bgloc.data.HashMapLocationTemplate;
-import com.marianhello.bgloc.data.LinkedHashSetLocationTemplate;
 import com.marianhello.bgloc.data.LocationTemplate;
 import com.marianhello.bgloc.data.LocationTemplateFactory;
 
@@ -11,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -131,11 +129,6 @@ public class ConfigMapper {
             Map map = ((HashMapLocationTemplate)tpl).toMap();
             if (map != null) {
                 template = new JSONObject(map);
-            }
-        } else if (tpl instanceof LinkedHashSetLocationTemplate) {
-            Object[] keys = ((LinkedHashSetLocationTemplate)tpl).toArray();
-            if (keys != null) {
-                template = new JSONArray(Arrays.asList(keys));
             }
         } else if (tpl instanceof ArrayListLocationTemplate) {
             Object[] keys = ((ArrayListLocationTemplate)tpl).toArray();
