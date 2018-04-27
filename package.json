@@ -4,14 +4,12 @@
   "description": "Cordova Background Geolocation Plugin",
   "cordova": {
     "id": "cordova-plugin-mauron85-background-geolocation",
-    "platforms": [
-      "android",
-      "ios"
-    ]
+    "platforms": ["android", "ios"]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mauron85/cordova-plugin-background-geolocation.git"
+    "url":
+      "git+https://github.com/mauron85/cordova-plugin-background-geolocation.git"
   },
   "keywords": [
     "gps",
@@ -31,15 +29,17 @@
       },
       "2.3.3": {
         "cordova-ios": ">=4.4.0",
-        "cordova-android": ">=6.3.0",
-        "cordova": ">=7.1.0"
+        "cordova-android": ">=6.2.3",
+        "cordova": ">=7.0.1"
       }
     }
   },
   "author": "",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/mauron85/cordova-plugin-background-geolocation/issues"
+    "url":
+      "https://github.com/mauron85/cordova-plugin-background-geolocation/issues"
   },
-  "homepage": "https://github.com/mauron85/cordova-plugin-background-geolocation#readme"
+  "homepage":
+    "https://github.com/mauron85/cordova-plugin-background-geolocation#readme"
 }

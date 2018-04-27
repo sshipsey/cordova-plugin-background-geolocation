@@ -10,8 +10,8 @@
     <keywords>cordova,phonegap,background,geolocation,gps,location</keywords>
 
     <engines>
-        <engine name="cordova" version=">=7.1.0"/>
-        <engine name="cordova-android" version=">=6.3.0"/>
+        <engine name="cordova" version=">=7.0.1"/>
+        <engine name="cordova-android" version=">=6.2.3"/>
         <engine name="cordova-ios" version=">=4.4.0"/>
     </engines>
 
